@@ -1,0 +1,671 @@
+/* Mise en page : un long récit en étapes, guidé par une frise verticale,
+   avec la fiche d'accueil du refuge épinglée sur le portrait d'Eros. */
+
+:root {
+  --fond: #eef1ee;
+  --surface: #f8faf8;
+  --bande: #e1e8e2;
+  --encre: #1c2628;
+  --encre-douce: #4a5659;
+  --ambre: #9c5a17;
+  --ambre-vif: #d9932f;
+  --sauge: #4f6b5d;
+  --trait: #c9d2cc;
+  --etiquette: #fbf6ea;
+  --etiquette-encre: #2b2a24;
+
+  --police-titre: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --police-texte: "Literata", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --police-fiche: "Courier Prime", "Courier New", ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: #121819;
+    --surface: #1a2224;
+    --bande: #172022;
+    --encre: #e4e9e5;
+    --encre-douce: #a7b2ae;
+    --ambre: #e5a65a;
+    --ambre-vif: #e8a85a;
+    --sauge: #93b5a2;
+    --trait: #2e393b;
+    --etiquette: #ece5d3;
+    --etiquette-encre: #22211c;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --fond: #121819;
+  --surface: #1a2224;
+  --bande: #172022;
+  --encre: #e4e9e5;
+  --encre-douce: #a7b2ae;
+  --ambre: #e5a65a;
+  --ambre-vif: #e8a85a;
+  --sauge: #93b5a2;
+  --trait: #2e393b;
+  --etiquette: #ece5d3;
+  --etiquette-encre: #22211c;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--police-texte);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--ambre);
+  text-underline-offset: 0.2em;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--ambre-vif);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--police-titre);
+  line-height: 1.1;
+  text-wrap: balance;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.surtitre,
+.chapitre-repere,
+.sommaire-titre,
+.encadre-etiquette {
+  font-family: var(--police-titre);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sauge);
+}
+
+/* Bandeau du haut */
+
+.entete {
+  border-bottom: 1px solid var(--trait);
+}
+
+.entete-int,
+.couverture-int,
+.parcours,
+.comprendre-int,
+.nouvelles-int,
+.pied-int {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+.entete-int {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-block: 16px;
+}
+
+.marque {
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.entete-nav {
+  display: flex;
+  gap: 20px;
+  font-family: var(--police-titre);
+  font-size: 0.95rem;
+}
+
+.entete-nav a {
+  color: var(--encre-douce);
+  text-decoration: none;
+}
+
+.entete-nav a:hover {
+  color: var(--ambre);
+}
+
+/* Couverture */
+
+.couverture-int {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 56px;
+  align-items: center;
+  padding-block: 64px 80px;
+}
+
+.couverture-texte {
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+  min-width: 0;
+}
+
+.titre-eros {
+  font-size: clamp(5rem, 15vw, 10.5rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.88;
+  color: var(--encre);
+}
+
+.chapeau {
+  font-size: 1.3rem;
+  line-height: 1.55;
+  max-width: 30ch;
+  color: var(--encre-douce);
+}
+
+.bouton {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--encre);
+  color: var(--fond);
+  font-family: var(--police-titre);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.bouton:hover {
+  background: var(--ambre);
+}
+
+.couverture-photo {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+}
+
+.couverture-photo img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Fiche d'accueil, comme une étiquette de refuge */
+
+.fiche {
+  position: absolute;
+  left: -40px;
+  bottom: -36px;
+  width: min(330px, 92%);
+  padding: 26px 20px 18px;
+  background: var(--etiquette);
+  color: var(--etiquette-encre);
+  font-family: var(--police-fiche);
+  font-size: 0.86rem;
+  line-height: 1.35;
+  border-radius: 4px;
+  box-shadow: 0 14px 30px rgb(0 0 0 / 0.22);
+  transform: rotate(-2.5deg);
+}
+
+.fiche::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: var(--fond);
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.35);
+}
+
+.fiche-titre {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px dashed rgb(0 0 0 / 0.35);
+}
+
+.fiche dl {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+}
+
+.fiche-ligne {
+  display: grid;
+  grid-template-columns: 9.5em minmax(0, 1fr);
+  gap: 8px;
+}
+
+.fiche dt {
+  opacity: 0.7;
+}
+
+.fiche dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Le parcours : frise + récit */
+
+.parcours {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 64px;
+  padding-block: 40px 88px;
+}
+
+.sommaire {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 28px);
+  align-self: start;
+}
+
+.sommaire-titre {
+  margin-bottom: 16px;
+}
+
+.sommaire ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  position: relative;
+}
+
+.sommaire ol::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  background: var(--trait);
+}
+
+.sommaire a {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 6px 0;
+  text-decoration: none;
+  color: var(--encre);
+}
+
+.sommaire-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--fond);
+  border: 2px solid var(--trait);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.sommaire a:hover .sommaire-num {
+  border-color: var(--ambre-vif);
+  color: var(--ambre);
+}
+
+.sommaire li:last-child .sommaire-num {
+  border-color: var(--ambre-vif);
+}
+
+.sommaire-texte {
+  display: grid;
+  line-height: 1.25;
+}
+
+.sommaire-etape {
+  font-family: var(--police-titre);
+  font-size: 0.75rem;
+  color: var(--encre-douce);
+}
+
+.sommaire-chap {
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.recit {
+  display: grid;
+  gap: 88px;
+  min-width: 0;
+}
+
+.chapitre {
+  display: grid;
+  gap: 18px;
+  max-width: 68ch;
+  scroll-margin-top: 24px;
+}
+
+.chapitre h2 {
+  font-size: clamp(2rem, 4.5vw, 2.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.chapitre-photo {
+  margin: 8px 0 6px;
+}
+
+.chapitre-photo img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.chapitre-photo figcaption {
+  margin-top: 8px;
+  font-family: var(--police-titre);
+  font-size: 0.85rem;
+  color: var(--encre-douce);
+}
+
+.encadre {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+}
+
+/* Comprendre la catégorie 2 */
+
+.comprendre {
+  background: var(--bande);
+  border-block: 1px solid var(--trait);
+}
+
+.comprendre-int {
+  display: grid;
+  gap: 20px;
+  padding-block: 80px;
+}
+
+.comprendre h2 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.intro {
+  max-width: 60ch;
+  font-size: 1.15rem;
+}
+
+.comprendre-grille {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  margin-top: 24px;
+}
+
+.bloc {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  min-width: 0;
+}
+
+.bloc h3,
+.message h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.bloc h3 + p {
+  margin-bottom: 14px;
+}
+
+.obligations {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.obligation {
+  display: grid;
+  grid-template-columns: 11em minmax(0, 1fr);
+  gap: 16px;
+  padding-block: 12px;
+  border-top: 1px solid var(--trait);
+}
+
+.obligation dt {
+  font-family: var(--police-titre);
+  font-weight: 600;
+}
+
+.obligation dd {
+  margin: 0;
+  color: var(--encre-douce);
+}
+
+.echelle {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.niveau {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--trait);
+  border-radius: 6px;
+  color: var(--encre-douce);
+}
+
+.niveau-num {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--trait);
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--encre);
+}
+
+.niveau-texte {
+  line-height: 1.4;
+}
+
+.niveau-eros {
+  background: var(--surface);
+  border-color: var(--ambre-vif);
+  color: var(--encre);
+}
+
+.niveau-eros .niveau-num {
+  background: var(--ambre-vif);
+  border-color: var(--ambre-vif);
+  color: #1c1408;
+}
+
+.niveau-marque {
+  font-family: var(--police-titre);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ambre);
+}
+
+.message {
+  display: grid;
+  gap: 12px;
+  max-width: 68ch;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--trait);
+}
+
+.message p:first-of-type {
+  font-size: 1.2rem;
+}
+
+.source {
+  font-family: var(--police-titre);
+  font-size: 0.9rem;
+  color: var(--encre-douce);
+}
+
+/* Nouvelles et pied de page */
+
+.nouvelles-int {
+  display: grid;
+  gap: 10px;
+  padding-block: 64px;
+}
+
+.nouvelles h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.nouvelles p {
+  color: var(--encre-douce);
+}
+
+.pied {
+  border-top: 1px solid var(--trait);
+}
+
+.pied-int {
+  padding-block: 28px 40px;
+  font-family: var(--police-titre);
+  font-size: 0.9rem;
+  color: var(--encre-douce);
+}
+
+/* Écrans moyens et téléphones */
+
+@media (max-width: 900px) {
+  .couverture-int {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding-block: 40px 72px;
+  }
+
+  .couverture-photo {
+    max-width: 520px;
+    margin-left: 24px;
+  }
+
+  .fiche {
+    left: -24px;
+  }
+
+  .parcours {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .sommaire {
+    position: static;
+  }
+
+  .comprendre-grille {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .entete-nav {
+    gap: 16px;
+  }
+
+  .couverture-photo {
+    margin-left: 0;
+  }
+
+  .fiche {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: auto;
+    margin: -48px 12px 0;
+  }
+
+  .obligation {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+
+  .niveau {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .niveau-marque {
+    grid-column: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
