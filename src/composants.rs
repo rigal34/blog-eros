@@ -4,15 +4,16 @@ use crate::histoire::{
     Chapitre, CHAPITRES, CHIENS_CATEGORIE_2, FICHE, GALERIE, NIVEAUX, NIVEAU_EROS, OBLIGATIONS,
 };
 
-// Où scintillent les étoiles sur la plaque : (gauche en %, haut en %, délai en secondes)
+// Où scintillent les étoiles sur le chrome de la plaque : (gauche en %, haut en %, délai en secondes)
 const ETINCELLES: &[(f32, f32, f32)] = &[
-    (22.8, 15.0, 0.3),
-    (15.8, 30.7, 1.1),
-    (57.9, 37.1, 1.9),
-    (11.0, 5.0, 2.6),
-    (86.3, 29.7, 3.2),
-    (72.7, 35.9, 4.0),
-    (95.0, 79.0, 4.7),
+    (19.8, 22.3, 0.3),
+    (11.6, 32.8, 0.9),
+    (47.6, 23.3, 1.5),
+    (34.0, 64.8, 2.1),
+    (13.2, 3.0, 2.7),
+    (89.3, 33.0, 3.3),
+    (57.4, 23.8, 3.9),
+    (92.6, 84.9, 4.5),
 ];
 
 #[component]
@@ -57,12 +58,12 @@ fn Couverture() -> Html {
             <div class="couverture-int">
                 <div class="couverture-texte">
                     <h1 class="titre-eros">
-                        // La plaque chromée en forme d'os, avec le nom d'Eros
+                        // La plaque chromée en forme d'os, avec le nom d'Eros et Cupidon
                         <span class="plaque">
-                            <img src="images/plaque-eros.webp" alt="Eros" width="1200" height="404" />
+                            <img src="images/plaque-eros-cupidon.webp" alt="Eros" width="1200" height="403" />
                             // Le reflet qui passe sur le chrome, de temps en temps
                             <span class="plaque-reflet" aria-hidden="true"></span>
-                            // Les petites étoiles qui scintillent sur les lettres, les pattes et le contour
+                            // Les petites étoiles qui scintillent sur le chrome : lettres, pattes et contour, jamais sur Cupidon
                             { for ETINCELLES.iter().map(|&(gauche, haut, delai)| html! {
                                 <span
                                     class="etincelle"
