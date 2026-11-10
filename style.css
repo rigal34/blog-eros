@@ -586,6 +586,32 @@ p {
   color: var(--encre-douce);
 }
 
+.galerie {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 14px;
+}
+
+.galerie-photo {
+  margin: 0;
+  min-width: 0;
+}
+
+.galerie-photo img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.galerie-photo figcaption {
+  margin-top: 8px;
+  font-family: var(--police-titre);
+  font-size: 0.85rem;
+  color: var(--encre-douce);
+}
+
 .pied {
   border-top: 1px solid var(--trait);
 }
@@ -632,6 +658,10 @@ p {
 @media (max-width: 520px) {
   .entete-nav {
     gap: 16px;
+  }
+
+  .galerie {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .couverture-photo {

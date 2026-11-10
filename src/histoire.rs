@@ -114,3 +114,10 @@ pub const NIVEAUX: &[(u8, &str)] = &[
 ];
 
 pub const NIVEAU_EROS: u8 = 1;
+
+// Les photos récentes, montrées dans « Les nouvelles d'Eros » : (fichier, légende).
+pub const GALERIE: &[(&str, &str)] = &[
+    ("images/eros-assis.webp", "Eros assis."),
+    ("images/barbecue.webp", "Dehors, près du barbecue."),
+    ("images/corbeille.webp", "Dans sa corbeille, avec un petit chien."),
+];

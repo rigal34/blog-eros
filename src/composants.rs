@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
 use crate::histoire::{
-    Chapitre, CHAPITRES, CHIENS_CATEGORIE_2, FICHE, NIVEAUX, NIVEAU_EROS, OBLIGATIONS,
+    Chapitre, CHAPITRES, CHIENS_CATEGORIE_2, FICHE, GALERIE, NIVEAUX, NIVEAU_EROS, OBLIGATIONS,
 };
 
 #[component]
@@ -52,7 +52,7 @@ fn Couverture() -> Html {
                     <a class="bouton" href="#chapitre-1">{ "Lire son histoire" }</a>
                 </div>
                 <figure class="couverture-photo">
-                    <img src="images/couverture.jpg" alt="Portrait d'Eros" width="1200" height="1500" />
+                    <img src="images/couverture.webp" alt="Portrait d'Eros" width="1200" height="1500" />
                     <FicheAccueil />
                 </figure>
             </div>
@@ -196,6 +196,14 @@ fn Nouvelles() -> Html {
             <div class="nouvelles-int">
                 <h2>{ "Les nouvelles d'Eros" }</h2>
                 <p>{ "Bientôt ici : ses sorties, ses progrès et la suite de son histoire." }</p>
+                <div class="galerie">
+                    { for GALERIE.iter().map(|&(image, legende)| html! {
+                        <figure class="galerie-photo">
+                            <img src={image} alt={legende} width="900" height="1200" loading="lazy" />
+                            <figcaption>{ legende }</figcaption>
+                        </figure>
+                    }) }
+                </div>
             </div>
         </section>
     }
