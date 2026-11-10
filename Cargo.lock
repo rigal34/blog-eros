@@ -15,6 +15,9 @@ dependencies = [
 name = "blog-eros"
 version = "0.1.0"
 dependencies = [
+ "gloo-timers",
+ "js-sys",
+ "web-sys",
  "yew",
 ]
 

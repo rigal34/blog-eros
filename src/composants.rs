@@ -19,6 +19,7 @@ pub fn App() -> Html {
             <Comprendre />
             <Nouvelles />
             <PiedDePage />
+            <crate::empreintes::Empreintes />
         </>
     }
 }

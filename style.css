@@ -623,6 +623,51 @@ p {
   color: var(--encre-douce);
 }
 
+/* Les traces du chien invisible */
+
+.empreintes {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.empreinte {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  color: var(--ambre);
+  opacity: 0;
+  animation: empreinte 3.2s ease-out forwards;
+}
+
+.empreinte svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+@keyframes empreinte {
+  0% { opacity: 0; }
+  8% { opacity: 0.4; }
+  60% { opacity: 0.32; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .empreintes {
+    display: none;
+  }
+}
+
+@media print {
+  .empreintes {
+    display: none;
+  }
+}
+
 /* Écrans moyens et téléphones */
 
 @media (max-width: 900px) {
