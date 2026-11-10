@@ -232,14 +232,15 @@ p {
   border-radius: 6px;
 }
 
-/* Fiche d'accueil, comme un ticket de caisse un peu froissé */
+/* Fiche d'accueil, comme un vieux ticket de caisse jauni et froissé */
 
 .fiche {
   position: absolute;
   left: -40px;
   bottom: -36px;
   width: min(330px, 92%);
-  color: var(--etiquette-encre);
+  --encre-passee: #3d3427;
+  color: var(--encre-passee);
   font-family: var(--police-fiche);
   font-size: 0.86rem;
   line-height: 1.35;
@@ -249,17 +250,24 @@ p {
 
 .fiche-papier {
   --dent: 10px;
-  --bande-rose: rgb(230 110 145 / 0.6);
+  --bande-rose: rgb(214 120 138 / 0.42);
   position: relative;
   padding: 28px 28px 24px;
   background:
     /* les plis du papier froissé */
-    linear-gradient(167deg, transparent 33%, rgb(0 0 0 / 0.06) 34.5%, rgb(255 255 255 / 0.7) 35.5%, transparent 37.5%),
-    linear-gradient(10deg, transparent 57%, rgb(0 0 0 / 0.05) 58.5%, rgb(255 255 255 / 0.6) 59.5%, transparent 61.5%),
-    linear-gradient(98deg, transparent 40%, rgb(0 0 0 / 0.04) 41.5%, transparent 43.5%),
-    linear-gradient(80deg, transparent 72%, rgb(0 0 0 / 0.035) 73.5%, transparent 75.5%),
-    radial-gradient(120% 90% at 20% 10%, rgb(255 255 255 / 0.8), transparent 60%),
-    radial-gradient(90% 70% at 85% 90%, rgb(0 0 0 / 0.06), transparent 70%),
+    linear-gradient(167deg, transparent 33%, rgb(70 50 20 / 0.12) 34.5%, rgb(255 250 235 / 0.55) 35.5%, transparent 37.5%),
+    linear-gradient(10deg, transparent 57%, rgb(70 50 20 / 0.11) 58.5%, rgb(255 250 235 / 0.5) 59.5%, transparent 61.5%),
+    linear-gradient(98deg, transparent 40%, rgb(70 50 20 / 0.09) 41.5%, rgb(255 250 235 / 0.35) 42.3%, transparent 43.5%),
+    linear-gradient(80deg, transparent 72%, rgb(70 50 20 / 0.08) 73.5%, transparent 75.5%),
+    linear-gradient(141deg, transparent 63%, rgb(70 50 20 / 0.08) 64%, rgb(255 250 235 / 0.4) 64.8%, transparent 66%),
+    linear-gradient(33deg, transparent 18%, rgb(70 50 20 / 0.07) 19%, transparent 21%),
+    /* les taches et la trace d'une tasse */
+    radial-gradient(circle at 80% 24%, rgb(150 105 45 / 0.16) 0 4%, transparent 8%),
+    radial-gradient(circle at 18% 62%, rgb(150 105 45 / 0.12) 0 3%, transparent 6%),
+    radial-gradient(circle at 70% 84%, transparent 0 10%, rgb(140 95 40 / 0.16) 11%, transparent 13.5%),
+    /* le papier qui a jauni, plus foncé sur les bords */
+    radial-gradient(120% 90% at 30% 20%, rgb(255 250 230 / 0.45), transparent 60%),
+    radial-gradient(ellipse at center, transparent 50%, rgb(130 95 40 / 0.22) 100%),
     /* les bandes roses sur les côtés, comme en fin de rouleau */
     linear-gradient(to right,
       transparent 10px,
@@ -267,7 +275,7 @@ p {
       transparent 14px calc(100% - 14px),
       var(--bande-rose) calc(100% - 14px) calc(100% - 10px),
       transparent calc(100% - 10px)),
-    #fcfbf6;
+    #eee2c2;
   /* les dents de scie en haut et en bas, là où le ticket a été déchiré */
   -webkit-mask:
     conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--dent) 51% repeat-x,
@@ -284,14 +292,14 @@ p {
   height: 26px;
   margin-top: 12px;
   padding-top: 10px;
-  border-top: 1px dashed rgb(0 0 0 / 0.35);
+  border-top: 1px dashed rgb(61 52 39 / 0.45);
   background: repeating-linear-gradient(90deg,
-    var(--etiquette-encre) 0 2px, transparent 2px 4px,
-    var(--etiquette-encre) 4px 5px, transparent 5px 8px,
-    var(--etiquette-encre) 8px 11px, transparent 11px 12px,
-    var(--etiquette-encre) 12px 13px, transparent 13px 16px);
+    var(--encre-passee) 0 2px, transparent 2px 4px,
+    var(--encre-passee) 4px 5px, transparent 5px 8px,
+    var(--encre-passee) 8px 11px, transparent 11px 12px,
+    var(--encre-passee) 12px 13px, transparent 13px 16px);
   background-clip: content-box;
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
 .fiche-titre {
