@@ -186,13 +186,11 @@ p {
   color: var(--encre);
 }
 
-.titre-os {
-  display: inline-block;
-  width: 0.7em;
-  height: 0.31em;
-  margin-left: 0.12em;
-  vertical-align: middle;
-  fill: currentColor;
+.titre-eros img {
+  display: block;
+  width: 560px;
+  max-width: 100%;
+  height: auto;
 }
 
 .chapeau {

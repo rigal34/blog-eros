@@ -47,15 +47,8 @@ fn Couverture() -> Html {
                 <div class="couverture-texte">
                     <p class="surtitre">{ "Une histoire vraie" }</p>
                     <h1 class="titre-eros">
-                        { "Eros" }
-                        // Le jeu de mots : un os à côté du « os » d'Eros
-                        <svg class="titre-os" viewBox="0 0 100 44" aria-hidden="true" focusable="false">
-                            <rect x="16" y="13" width="68" height="18" rx="9" />
-                            <circle cx="16" cy="13" r="11" />
-                            <circle cx="16" cy="31" r="11" />
-                            <circle cx="84" cy="13" r="11" />
-                            <circle cx="84" cy="31" r="11" />
-                        </svg>
+                        // La plaque chromée en forme d'os, avec le nom d'Eros
+                        <img src="images/plaque-eros.webp" alt="Eros" width="1200" height="404" />
                     </h1>
                     <p class="chapeau">
                         { "Il a connu les combats, la peur et une infection qui a failli l'emporter. Voici son histoire, racontée par celui qui l'a sorti du refuge." }
