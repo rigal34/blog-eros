@@ -186,11 +186,80 @@ p {
   color: var(--encre);
 }
 
-.titre-eros img {
+.plaque {
+  position: relative;
   display: block;
   width: 560px;
   max-width: 100%;
+}
+
+.titre-eros img {
+  display: block;
+  width: 100%;
   height: auto;
+}
+
+/* Le reflet de lumière qui glisse sur le chrome (lettres, pattes, contour) */
+.plaque-reflet {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(105deg,
+      transparent 36%,
+      rgb(255 255 255 / 0.55) 44%,
+      #fff 50%,
+      rgb(255 255 255 / 0.55) 56%,
+      transparent 64%)
+    100% 0 / 250% 100% no-repeat;
+  filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.8));
+  -webkit-mask: url("images/plaque-eros-chrome.webp") center / 100% 100% no-repeat;
+  mask: url("images/plaque-eros-chrome.webp") center / 100% 100% no-repeat;
+  animation: reflet 5s ease-in-out 1s infinite;
+}
+
+@keyframes reflet {
+  0% { background-position: 100% 0; }
+  35% { background-position: 0% 0; }
+  100% { background-position: 0% 0; }
+}
+
+/* Les étoiles qui scintillent */
+.etincelle {
+  position: absolute;
+  width: clamp(20px, 8%, 46px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, #fff 0 12%, rgb(255 255 255 / 0.7) 22%, transparent 48%);
+  filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px rgb(255 255 255 / 0.7));
+  animation: etincelle 5.2s ease-in-out infinite;
+}
+
+.etincelle::before,
+.etincelle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(50% 7% at 50% 50%, #fff 0%, rgb(255 255 255 / 0.85) 40%, transparent 100%);
+}
+
+.etincelle::after {
+  transform: rotate(90deg);
+}
+
+@keyframes etincelle {
+  0%, 62%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+  72% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(45deg); }
+  84% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.45) rotate(90deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plaque-reflet,
+  .etincelle {
+    display: none;
+  }
 }
 
 .chapeau {

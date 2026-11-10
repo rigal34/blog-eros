@@ -4,6 +4,17 @@ use crate::histoire::{
     Chapitre, CHAPITRES, CHIENS_CATEGORIE_2, FICHE, GALERIE, NIVEAUX, NIVEAU_EROS, OBLIGATIONS,
 };
 
+// Où scintillent les étoiles sur la plaque : (gauche en %, haut en %, délai en secondes)
+const ETINCELLES: &[(f32, f32, f32)] = &[
+    (22.8, 15.0, 0.3),
+    (15.8, 30.7, 1.1),
+    (57.9, 37.1, 1.9),
+    (11.0, 5.0, 2.6),
+    (86.3, 29.7, 3.2),
+    (72.7, 35.9, 4.0),
+    (95.0, 79.0, 4.7),
+];
+
 #[component]
 pub fn App() -> Html {
     html! {
@@ -48,7 +59,19 @@ fn Couverture() -> Html {
                     <p class="surtitre">{ "Une histoire vraie" }</p>
                     <h1 class="titre-eros">
                         // La plaque chromée en forme d'os, avec le nom d'Eros
-                        <img src="images/plaque-eros.webp" alt="Eros" width="1200" height="404" />
+                        <span class="plaque">
+                            <img src="images/plaque-eros.webp" alt="Eros" width="1200" height="404" />
+                            // Le reflet qui passe sur le chrome, de temps en temps
+                            <span class="plaque-reflet" aria-hidden="true"></span>
+                            // Les petites étoiles qui scintillent sur les lettres, les pattes et le contour
+                            { for ETINCELLES.iter().map(|&(gauche, haut, delai)| html! {
+                                <span
+                                    class="etincelle"
+                                    aria-hidden="true"
+                                    style={format!("left:{}%;top:{}%;animation-delay:{}s;", gauche, haut, delai)}
+                                ></span>
+                            }) }
+                        </span>
                     </h1>
                     <p class="chapeau">
                         { "Il a connu les combats, la peur et une infection qui a failli l'emporter. Voici son histoire, racontée par celui qui l'a sorti du refuge." }
