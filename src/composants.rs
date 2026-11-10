@@ -75,15 +75,18 @@ fn Couverture() -> Html {
 fn FicheAccueil() -> Html {
     html! {
         <div class="fiche">
-            <p class="fiche-titre">{ "Fiche d'accueil" }</p>
-            <dl>
-                { for FICHE.iter().map(|&(cle, valeur)| html! {
-                    <div class="fiche-ligne">
-                        <dt>{ cle }</dt>
-                        <dd>{ valeur }</dd>
-                    </div>
-                }) }
-            </dl>
+            // Le papier du ticket de caisse, découpé en dents de scie en haut et en bas
+            <div class="fiche-papier">
+                <p class="fiche-titre">{ "Fiche d'accueil" }</p>
+                <dl>
+                    { for FICHE.iter().map(|&(cle, valeur)| html! {
+                        <div class="fiche-ligne">
+                            <dt>{ cle }</dt>
+                            <dd>{ valeur }</dd>
+                        </div>
+                    }) }
+                </dl>
+            </div>
         </div>
     }
 }
