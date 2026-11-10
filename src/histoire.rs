@@ -60,8 +60,8 @@ pub const CHAPITRES: &[Chapitre] = &[
         numero: 3,
         etape: "La maladie",
         titre: "Entre la vie et la mort",
-        image: "images/chapitre-3.jpg",
-        legende: "Les jours de soins.",
+        image: "images/chapitre-3.webp",
+        legende: "Eros au barbecue.",
         paragraphes: &[
             "Eros avait une infection aux poumons. Il était faible et il respirait mal. Pendant plusieurs jours, il a été entre la vie et la mort.",
             "Je ne savais pas s'il allait s'en sortir. Je suis resté près de lui. Je voulais qu'il sache qu'il n'était plus seul.",
@@ -118,6 +118,6 @@ pub const NIVEAU_EROS: u8 = 1;
 // Les photos récentes, montrées dans « Les nouvelles d'Eros » : (fichier, légende).
 pub const GALERIE: &[(&str, &str)] = &[
     ("images/eros-assis.webp", "Eros assis."),
-    ("images/barbecue.webp", "Dehors, près du barbecue."),
-    ("images/corbeille.webp", "Dans sa corbeille, avec un petit chien."),
+    ("images/barbecue.webp", "Eros surveille le barbecue."),
+    ("images/corbeille.webp", "Eros dans la corbeille de sa copine Capucine."),
 ];
