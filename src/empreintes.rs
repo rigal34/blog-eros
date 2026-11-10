@@ -11,7 +11,7 @@ const ATTENTE_MIN: f64 = 9_000.0;
 const ATTENTE_MAX: f64 = 18_000.0;
 const INTERVALLE_PAS: u32 = 380;
 // Doit être égal à la durée de l'animation .empreinte dans style.css
-const DUREE_EMPREINTE: u32 = 3_200;
+const DUREE_EMPREINTE: u32 = 12_000;
 
 // Distances en pixels
 const AVANCE_PAR_PAS: f64 = 26.0;

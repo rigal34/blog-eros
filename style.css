@@ -646,9 +646,9 @@ p {
   position: absolute;
   width: 24px;
   height: 24px;
-  color: var(--ambre);
+  color: var(--encre);
   opacity: 0;
-  animation: empreinte 3.2s ease-out forwards;
+  animation: empreinte 12s ease-in forwards;
 }
 
 .empreinte svg {
@@ -660,8 +660,8 @@ p {
 
 @keyframes empreinte {
   0% { opacity: 0; }
-  8% { opacity: 0.4; }
-  60% { opacity: 0.32; }
+  3% { opacity: 0.85; }
+  60% { opacity: 0.85; }
   100% { opacity: 0; }
 }
 
