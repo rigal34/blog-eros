@@ -56,7 +56,6 @@ fn Couverture() -> Html {
         <section class="couverture" id="haut">
             <div class="couverture-int">
                 <div class="couverture-texte">
-                    <p class="surtitre">{ "Une histoire vraie" }</p>
                     <h1 class="titre-eros">
                         // La plaque chromée en forme d'os, avec le nom d'Eros
                         <span class="plaque">
@@ -73,6 +72,7 @@ fn Couverture() -> Html {
                             }) }
                         </span>
                     </h1>
+                    <p class="surtitre">{ "Une histoire vraie" }</p>
                     <p class="chapeau">
                         { "Il a connu les combats, la peur et une infection qui a failli l'emporter. Voici son histoire, racontée par celui qui l'a sorti du refuge." }
                     </p>
