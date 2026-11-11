@@ -247,6 +247,14 @@ fn PiedDePage() -> Html {
         <footer class="pied">
             <div class="pied-int">
                 <p>{ "Le blog d'Eros, tenu par Bruno." }</p>
+                <p class="pied-realise">
+                    { "Site réalisé par Bruno · création de sites sur mesure à des prix attractifs · " }
+                    <a href="https://rigal34.github.io/" target="_blank" rel="noopener">
+                        { "Voir le profil du réalisateur" }
+                        // Texte lu par les lecteurs d'écran (personnes aveugles ou malvoyantes), invisible à l'écran
+                        <span class="lecteur-ecran">{ " : ouvre le portfolio de Bruno, créateur de sites web à Montpellier, dans un nouvel onglet" }</span>
+                    </a>
+                </p>
             </div>
         </footer>
     }
