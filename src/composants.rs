@@ -46,6 +46,7 @@ fn Entete() -> Html {
                     <a href="#chapitre-1">{ "L'histoire" }</a>
                     <a href="#comprendre">{ "La catégorie 2" }</a>
                 </nav>
+                <crate::interrupteur::Interrupteur />
             </div>
         </header>
     }

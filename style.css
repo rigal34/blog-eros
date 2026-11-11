@@ -138,6 +138,7 @@ p {
 }
 
 .marque {
+  margin-right: auto;
   font-family: var(--police-titre);
   font-weight: 700;
   font-size: 1.05rem;
@@ -159,6 +160,69 @@ p {
 
 .entete-nav a:hover {
   color: var(--ambre);
+}
+
+/* L'interrupteur chromé : un clic éteint le site, un autre le rallume */
+
+.interrupteur {
+  position: relative;
+  flex: none;
+  width: 27px;
+  height: 46px;
+  margin-block: -6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 90px;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.3));
+  -webkit-tap-highlight-color: transparent;
+}
+
+.interrupteur:hover {
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.3)) brightness(1.08);
+}
+
+.interrupteur:focus-visible {
+  outline: 2px solid var(--ambre-vif);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.interrupteur img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Le bouton du milieu bascule autour de son centre, comme un vrai interrupteur */
+.levier {
+  transform-origin: 50% 49.4%;
+  transition: opacity 0.1s ease, transform 0.32s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.levier-eteint {
+  opacity: 0;
+  transform: rotateX(22deg);
+}
+
+.interrupteur-eteint .levier-allume {
+  opacity: 0;
+  transform: rotateX(-22deg);
+  transition-delay: 0.1s, 0s;
+}
+
+.interrupteur-eteint .levier-eteint {
+  opacity: 1;
+  transform: none;
+}
+
+/* Pendant qu'on appuie sur l'interrupteur, tout le site change de couleur en douceur */
+:root.changement-theme *:not(.levier),
+:root.changement-theme *::before,
+:root.changement-theme *::after {
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease, fill 0.6s ease;
 }
 
 /* Couverture */
@@ -818,7 +882,10 @@ p {
 }
 
 @media (max-width: 520px) {
+  /* Sur téléphone : le nom et l'interrupteur en haut, les liens en dessous */
   .entete-nav {
+    order: 3;
+    width: 100%;
     gap: 16px;
   }
 
