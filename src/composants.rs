@@ -83,7 +83,8 @@ fn Couverture() -> Html {
                     <a class="bouton" href="#chapitre-1">{ "Lire son histoire" }</a>
                 </div>
                 <figure class="couverture-photo">
-                    <img src="images/couverture.webp" alt="Portrait d'Eros" width="1200" height="1500" />
+                    // Le cadre chromé autour de la photo
+<div class="cadre-chrome"><img src="images/couverture.webp" alt="Portrait d'Eros" width="1200" height="1500" /></div>
                     <FicheAccueil />
                 </figure>
             </div>
@@ -272,7 +273,8 @@ fn ChapitreVue(props: &ChapitreProps) -> Html {
             <p class="chapitre-repere">{ format!("Chapitre {} · {}", chapitre.numero, chapitre.etape) }</p>
             <h2>{ chapitre.titre }</h2>
             <figure class="chapitre-photo">
-                <img src={chapitre.image} alt={chapitre.legende} width="1600" height="1000" loading="lazy" />
+                // Le cadre chromé autour de la photo
+<div class="cadre-chrome"><img src={chapitre.image} alt={chapitre.legende} width="1600" height="1000" loading="lazy" /></div>
                 <figcaption>{ chapitre.legende }</figcaption>
             </figure>
             { for chapitre.paragraphes.iter().map(|&paragraphe| html! { <p>{ paragraphe }</p> }) }
@@ -348,7 +350,8 @@ fn Nouvelles() -> Html {
                 <div class="galerie">
                     { for GALERIE.iter().map(|&(image, legende)| html! {
                         <figure class="galerie-photo">
-                            <img src={image} alt={legende} width="900" height="1200" loading="lazy" />
+                            // Le cadre chromé autour de la photo
+<div class="cadre-chrome"><img src={image} alt={legende} width="900" height="1200" loading="lazy" /></div>
                             <figcaption>{ legende }</figcaption>
                         </figure>
                     }) }

@@ -951,6 +951,63 @@ p {
   }
 }
 
+/* Le cadre chromé autour des photos : le même chrome que le contour de l'os, en plus fin,
+   avec le même reflet de lumière qui glisse dessus. */
+.cadre-chrome {
+  --epaisseur-cadre: 7px;
+  position: relative;
+  display: block;
+  padding: var(--epaisseur-cadre);
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg,
+      #f4f6f8 0%, #8d959e 9%, #ffffff 17%, #4a5159 27%, #dfe4e9 37%,
+      #ffffff 45%, #2b3036 54%, #c9cfd6 63%, #ffffff 72%, #6d757e 83%, #eef1f4 92%, #a7aeb6 100%);
+  box-shadow:
+    0 0 0 1px #15191d,
+    inset 0 1px 1px 1px rgb(255 255 255 / 0.9),
+    inset 0 -2px 2px 1px rgb(0 0 0 / 0.45),
+    0 10px 22px rgb(0 0 0 / 0.28);
+}
+
+.cadre-chrome img {
+  display: block;
+  border-radius: 4px;
+  /* de la photo vers l'extérieur : un trait sombre, un jonc brillant, une rainure sombre */
+  box-shadow:
+    0 0 0 1px #15191d,
+    0 0 0 2.5px rgb(255 255 255 / 0.9),
+    0 0 0 3.5px rgb(21 25 29 / 0.6);
+}
+
+/* Le reflet ne passe que sur le cadre, pas sur la photo */
+.cadre-chrome::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: var(--epaisseur-cadre);
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(105deg,
+      transparent 36%,
+      rgb(255 255 255 / 0.55) 44%,
+      #fff 50%,
+      rgb(255 255 255 / 0.55) 56%,
+      transparent 64%)
+    100% 0 / 250% 100% no-repeat border-box;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: reflet 5s ease-in-out 1s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cadre-chrome::after {
+    display: none;
+  }
+}
+
 /* La fiche d'accueil se décroche quand la souris reste dessus : elle tombe tout droit
    et sort par le bas de l'écran. Elle revient quand on remonte tout en haut du blog.
    Seulement avec une souris (pas sur les téléphones), et pas si le visiteur a demandé moins d'animations. */
