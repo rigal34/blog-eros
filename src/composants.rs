@@ -1,3 +1,5 @@
+use gloo_timers::callback::Timeout;
+use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 
 use crate::histoire::{
@@ -89,10 +91,125 @@ fn Couverture() -> Html {
     }
 }
 
+// Combien de temps la souris doit rester sur la fiche avant qu'elle se décroche (en millisecondes)
+const ATTENTE_AVANT_CHUTE: u32 = 1000;
+
+// Au bout de combien de survols la fiche se décroche, même si la souris ne reste pas dessus
+const SURVOLS_AVANT_CHUTE: u32 = 2;
+
+// Juste après son retour, la fiche ne compte pas les survols pendant ce temps (en millisecondes) :
+// un peu plus long que son retour en fondu dans style.css (0,6 s)
+const REPIT_APRES_RETOUR: f64 = 700.0;
+
+// Les trois états de la fiche d'accueil
+#[derive(Clone, Copy, PartialEq)]
+enum EtatFiche {
+    // Épinglée sur le portrait, comme au départ
+    Accrochee,
+    // Décrochée : elle tombe tout droit et sort par le bas de l'écran
+    Tombee,
+    // Le visiteur est remonté tout en haut : elle est de nouveau épinglée
+    Revenue,
+}
+
+// De combien de pixels la page est descendue (0 = tout en haut)
+fn hauteur_defilee() -> f64 {
+    web_sys::window()
+        .and_then(|f| f.scroll_y().ok())
+        .unwrap_or(0.0)
+}
+
 #[component]
 fn FicheAccueil() -> Html {
+    let etat = use_state(|| EtatFiche::Accrochee);
+    // Le compte à rebours lancé quand la souris arrive sur la fiche
+    let attente = use_mut_ref(|| None::<Timeout>);
+    // Combien de fois la souris est passée sur la fiche depuis qu'elle est épinglée
+    let survols = use_mut_ref(|| 0u32);
+    // L'heure à laquelle la fiche est revenue à sa place (en millisecondes)
+    let retour = use_mut_ref(|| 0.0_f64);
+
+    // La souris arrive sur la fiche : au deuxième survol, la fiche se décroche tout de suite ;
+    // au premier, elle ne se décroche que si la souris y reste un moment.
+    let onmouseenter = {
+        let etat = etat.clone();
+        let attente = attente.clone();
+        let survols = survols.clone();
+        let retour = retour.clone();
+        Callback::from(move |_: MouseEvent| {
+            if *etat == EtatFiche::Tombee {
+                return;
+            }
+            // La fiche vient de réapparaître sous la souris, sans que le visiteur ait bougé : ça ne compte pas
+            if js_sys::Date::now() - *retour.borrow() < REPIT_APRES_RETOUR {
+                return;
+            }
+            *survols.borrow_mut() += 1;
+            if *survols.borrow() >= SURVOLS_AVANT_CHUTE {
+                *survols.borrow_mut() = 0;
+                attente.borrow_mut().take();
+                etat.set(EtatFiche::Tombee);
+                return;
+            }
+            let etat = etat.clone();
+            let survols = survols.clone();
+            *attente.borrow_mut() = Some(Timeout::new(ATTENTE_AVANT_CHUTE, move || {
+                *survols.borrow_mut() = 0;
+                etat.set(EtatFiche::Tombee);
+            }));
+        })
+    };
+
+    // La souris repart avant la fin du compte à rebours : la fiche reste en place
+    let onmouseleave = {
+        let attente = attente.clone();
+        Callback::from(move |_: MouseEvent| {
+            attente.borrow_mut().take();
+        })
+    };
+
+    // Une fois la fiche tombée, on surveille la page : la fiche ne revient
+    // que lorsque le visiteur est descendu puis remonté tout en haut.
+    {
+        let etat = etat.clone();
+        let retour = retour.clone();
+        use_effect_with(*etat, move |&etat_actuel| {
+            let mut surveillance = None;
+            if etat_actuel == EtatFiche::Tombee {
+                if let Some(fenetre) = web_sys::window() {
+                    let mut descendu = hauteur_defilee() > 0.0;
+                    let ecoute = Closure::<dyn FnMut()>::new(move || {
+                        if hauteur_defilee() > 0.0 {
+                            descendu = true;
+                        } else if descendu {
+                            *retour.borrow_mut() = js_sys::Date::now();
+                            etat.set(EtatFiche::Revenue);
+                        }
+                    });
+                    let _ = fenetre
+                        .add_event_listener_with_callback("scroll", ecoute.as_ref().unchecked_ref());
+                    surveillance = Some((fenetre, ecoute));
+                }
+            }
+            move || {
+                if let Some((fenetre, ecoute)) = surveillance {
+                    let _ = fenetre.remove_event_listener_with_callback(
+                        "scroll",
+                        ecoute.as_ref().unchecked_ref(),
+                    );
+                }
+            }
+        });
+    }
+
+    let classe_etat = match *etat {
+        EtatFiche::Accrochee => None,
+        EtatFiche::Tombee => Some("fiche-tombee"),
+        EtatFiche::Revenue => Some("fiche-revenue"),
+    };
+
     html! {
-        <div class="fiche">
+        <div class={classes!("fiche", classe_etat)} {onmouseenter} {onmouseleave}>
             // Le papier du ticket de caisse, découpé en dents de scie en haut et en bas
             <div class="fiche-papier">
                 <p class="fiche-titre">{ "Fiche d'accueil" }</p>

@@ -951,6 +951,45 @@ p {
   }
 }
 
+/* La fiche d'accueil se décroche quand la souris reste dessus : elle tombe tout droit
+   et sort par le bas de l'écran. Elle revient quand on remonte tout en haut du blog.
+   Seulement avec une souris (pas sur les téléphones), et pas si le visiteur a demandé moins d'animations. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .fiche-tombee {
+    pointer-events: none;
+    animation: fiche-chute 1.5s forwards;
+  }
+
+  .fiche-revenue {
+    animation: fiche-retour 0.6s ease-out;
+  }
+}
+
+@keyframes fiche-chute {
+  /* elle se décroche : un petit à-coup */
+  0% {
+    transform: translateY(0) rotate(-2.5deg);
+  }
+  20% {
+    transform: translateY(8px) rotate(-1deg);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.5);
+  }
+  /* puis elle tombe, de plus en plus vite, sans se balancer */
+  100% {
+    transform: translateY(130vh) rotate(0deg);
+    visibility: hidden;
+  }
+}
+
+@keyframes fiche-retour {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Le curseur de la souris est une patte de chien. Sur ce qui se clique, la patte devient ambre. */
 html {
   cursor: url("images/patte-curseur.png") 16 6, auto;

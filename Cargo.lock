@@ -17,6 +17,7 @@ version = "0.1.0"
 dependencies = [
  "gloo-timers",
  "js-sys",
+ "wasm-bindgen",
  "web-sys",
  "yew",
 ]
