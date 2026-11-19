@@ -951,6 +951,22 @@ p {
   }
 }
 
+/* Le curseur de la souris est une patte de chien. Sur ce qui se clique, la patte devient ambre. */
+html {
+  cursor: url("images/patte-curseur.png") 16 6, auto;
+  cursor: image-set(url("images/patte-curseur.png") 1x, url("images/patte-curseur-2x.png") 2x) 16 6, auto;
+}
+
+a,
+button,
+summary,
+label,
+[role="button"],
+.interrupteur {
+  cursor: url("images/patte-curseur-lien.png") 16 6, pointer;
+  cursor: image-set(url("images/patte-curseur-lien.png") 1x, url("images/patte-curseur-lien-2x.png") 2x) 16 6, pointer;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
