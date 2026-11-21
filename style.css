@@ -1072,3 +1072,29 @@ label,
     transition: none !important;
   }
 }
+
+/* La photo que l'on peut agrandir d'un clic : elle grossit à l'intérieur de son cadre, sans en sortir */
+.cadre-chrome .photo-zoom {
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow:
+    0 0 0 1px #15191d,
+    0 0 0 2.5px rgb(255 255 255 / 0.9),
+    0 0 0 3.5px rgb(21 25 29 / 0.6);
+}
+
+.cadre-chrome .photo-zoom img {
+  border-radius: 0;
+  box-shadow: none;
+  transition: transform 0.35s ease;
+}
+
+.cadre-chrome .photo-agrandie img {
+  transition: transform 0.35s ease, transform-origin 0.08s linear;
+}
+
+/* Le titre « Enfin libre » : dans la police des autres titres, le f et le i se touchent.
+   Ce titre-là est donc écrit en DM Sans, où les deux lettres restent bien séparées. */
+#chapitre-2 h2 {
+  font-family: "DM Sans", "Segoe UI", system-ui, sans-serif;
+}

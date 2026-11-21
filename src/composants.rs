@@ -249,6 +249,97 @@ fn Sommaire() -> Html {
     }
 }
 
+// Combien de fois la photo est agrandie quand on clique dessus
+const GROSSISSEMENT: f64 = 2.6;
+
+#[derive(Properties, PartialEq)]
+struct PhotoZoomProps {
+    image: &'static str,
+    grande: &'static str,
+    legende: &'static str,
+}
+
+// Une photo dans son cadre chromé, avec un zoom : un clic agrandit l'endroit cliqué,
+// la souris déplace la partie visible, un second clic revient à la photo entière.
+#[component]
+fn PhotoZoom(props: &PhotoZoomProps) -> Html {
+    let agrandie = use_state(|| false);
+    // Le point de la photo qui reste sous la souris, en pourcentage (gauche, haut)
+    let point = use_state(|| (50.0_f64, 50.0_f64));
+
+    // La zone de la photo dans la page, pour savoir où se trouve la souris par rapport à elle
+    let zone_photo = use_node_ref();
+
+    let position = {
+        let zone_photo = zone_photo.clone();
+        move |evenement: &MouseEvent| -> Option<(f64, f64)> {
+        let cible = zone_photo.cast::<web_sys::Element>()?;
+        let zone = cible.get_bounding_client_rect();
+        if zone.width() <= 0.0 || zone.height() <= 0.0 {
+            return None;
+        }
+        let gauche = (evenement.client_x() as f64 - zone.left()) / zone.width() * 100.0;
+        let haut = (evenement.client_y() as f64 - zone.top()) / zone.height() * 100.0;
+        Some((gauche.clamp(0.0, 100.0), haut.clamp(0.0, 100.0)))
+        }
+    };
+
+    let au_clic = {
+        let agrandie = agrandie.clone();
+        let point = point.clone();
+        let position = position.clone();
+        Callback::from(move |evenement: MouseEvent| {
+            if !*agrandie {
+                if let Some(nouveau) = position(&evenement) {
+                    point.set(nouveau);
+                }
+            }
+            agrandie.set(!*agrandie);
+        })
+    };
+
+    let au_deplacement = {
+        let agrandie = agrandie.clone();
+        let point = point.clone();
+        Callback::from(move |evenement: MouseEvent| {
+            if *agrandie {
+                if let Some(nouveau) = position(&evenement) {
+                    point.set(nouveau);
+                }
+            }
+        })
+    };
+
+    let a_la_sortie = {
+        let agrandie = agrandie.clone();
+        Callback::from(move |_: MouseEvent| agrandie.set(false))
+    };
+
+    let (gauche, haut) = *point;
+    let (source, style) = if *agrandie {
+        (
+            props.grande,
+            format!("transform-origin: {gauche:.2}% {haut:.2}%; transform: scale({GROSSISSEMENT});"),
+        )
+    } else {
+        (props.image, format!("transform-origin: {gauche:.2}% {haut:.2}%;"))
+    };
+
+    html! {
+        <div class="cadre-chrome">
+            <div
+                ref={zone_photo}
+                class={classes!("photo-zoom", (*agrandie).then_some("photo-agrandie"))}
+                onclick={au_clic}
+                onmousemove={au_deplacement}
+                onmouseleave={a_la_sortie}
+            >
+                <img src={source} alt={props.legende} width="1600" height="1000" loading="lazy" style={style} />
+            </div>
+        </div>
+    }
+}
+
 #[derive(Properties, PartialEq)]
 struct ChapitreProps {
     chapitre: &'static Chapitre,
@@ -274,8 +365,22 @@ fn ChapitreVue(props: &ChapitreProps) -> Html {
             <h2>{ chapitre.titre }</h2>
             <figure class="chapitre-photo">
                 // Le cadre chromé autour de la photo
-<div class="cadre-chrome"><img src={chapitre.image} alt={chapitre.legende} width="1600" height="1000" loading="lazy" /></div>
-                <figcaption>{ chapitre.legende }</figcaption>
+                {
+                    match chapitre.image_grande {
+                        Some(grande) => html! {
+                            <>
+                                <PhotoZoom image={chapitre.image} grande={grande} legende={chapitre.legende} />
+                                <figcaption>{ chapitre.legende }{ " Clique sur la photo pour voir Eros de près." }</figcaption>
+                            </>
+                        },
+                        None => html! {
+                            <>
+                                <div class="cadre-chrome"><img src={chapitre.image} alt={chapitre.legende} width="1600" height="1000" loading="lazy" /></div>
+                                <figcaption>{ chapitre.legende }</figcaption>
+                            </>
+                        },
+                    }
+                }
             </figure>
             { for chapitre.paragraphes.iter().map(|&paragraphe| html! { <p>{ paragraphe }</p> }) }
             { encadre }

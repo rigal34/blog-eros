@@ -8,6 +8,8 @@ pub struct Chapitre {
     pub etape: &'static str,
     pub titre: &'static str,
     pub image: &'static str,
+    // La même photo en grande taille, pour le zoom au clic (None = pas de zoom)
+    pub image_grande: Option<&'static str>,
     pub legende: &'static str,
     pub paragraphes: &'static [&'static str],
     pub encadre: Option<Encadre>,
@@ -34,6 +36,7 @@ pub const CHAPITRES: &[Chapitre] = &[
         etape: "Au refuge",
         titre: "La rencontre",
         image: "images/chapitre-1.jpg",
+        image_grande: None,
         legende: "Eros au refuge.",
         paragraphes: &[
             "La première fois que j'ai vu Eros, il était au fond de son box, au refuge. Il ne venait pas vers la grille comme les autres chiens. Il me regardait sans bouger, comme s'il attendait de savoir ce que j'allais faire.",
@@ -44,9 +47,10 @@ pub const CHAPITRES: &[Chapitre] = &[
     Chapitre {
         numero: 2,
         etape: "Avant le refuge",
-        titre: "Ce qu'il avait vécu",
-        image: "images/chapitre-2.jpg",
-        legende: "Les traces de son passé.",
+        titre: "Enfin libre",
+        image: "images/chapitre-2-plage.webp",
+        image_grande: Some("images/chapitre-2-plage-grande.webp"),
+        legende: "Eros à la plage.",
         paragraphes: &[
             "Ses anciens propriétaires se servaient de lui pour des combats de chiens. Eros n'avait connu ni la douceur ni le jeu. On l'avait obligé à se battre.",
             "Quand je l'ai récupéré, il était en très mauvais état. Son corps portait les marques de ce qu'il avait subi.",
@@ -61,6 +65,7 @@ pub const CHAPITRES: &[Chapitre] = &[
         etape: "La maladie",
         titre: "Entre la vie et la mort",
         image: "images/chapitre-3.webp",
+        image_grande: None,
         legende: "Eros au barbecue.",
         paragraphes: &[
             "Eros avait une infection aux poumons. Il était faible et il respirait mal. Pendant plusieurs jours, il a été entre la vie et la mort.",
@@ -73,6 +78,7 @@ pub const CHAPITRES: &[Chapitre] = &[
         etape: "La guérison",
         titre: "Le retour à la vie",
         image: "images/chapitre-4.jpg",
+        image_grande: None,
         legende: "Eros reprend des forces.",
         paragraphes: &[
             "Eros s'est battu, cette fois pour vivre. Petit à petit, il a repris des forces.",
@@ -85,6 +91,7 @@ pub const CHAPITRES: &[Chapitre] = &[
         etape: "Aujourd'hui",
         titre: "Eros aujourd'hui",
         image: "images/chapitre-5.jpg",
+        image_grande: None,
         legende: "Eros aujourd'hui.",
         paragraphes: &[
             "Aujourd'hui, Eros vit avec moi. Il est assuré, j'ai obtenu son permis de détention, et il a passé son évaluation comportementale : niveau 1, le niveau le plus bas.",
